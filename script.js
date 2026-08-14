@@ -1,3 +1,4 @@
+alert("script.js loaded!");
 function checkOrderStatus() {
     const orderNumber = document.getElementById("orderNumber").value;
     const result = document.getElementById("result");
