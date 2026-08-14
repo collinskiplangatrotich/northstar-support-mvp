@@ -3,84 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Northstar Retail Support MVP</title>
-
-    <!-- Link CSS -->
-    <link rel="stylesheet" href="style.css">
+    <title>Northstar Retail Support</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 0 20px;
+            color: #333;
+        }
+        h1 {
+            color: #1a1a1a;
+        }
+        .section {
+            border-top: 1px solid #ccc;
+            padding-top: 20px;
+            margin-top: 25px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        input, select, button {
+            padding: 8px 12px;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        button {
+            cursor: pointer;
+            background-color: #f0f0f0;
+            border: 1px solid #767676;
+            border-radius: 3px;
+        }
+        button:hover {
+            background-color: #e0e0e0;
+        }
+        .result-box {
+            margin-top: 12px;
+            padding: 10px 15px;
+            border-radius: 4px;
+            display: none;
+            font-weight: bold;
+        }
+        .status-success {
+            background-color: #e7f4e8;
+            color: #1b5e20;
+            border: 1px solid #a5d6a7;
+        }
+        .status-error {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+        }
+        footer {
+            margin-top: 40px;
+            border-top: 1px solid #ccc;
+            padding-top: 15px;
+            font-size: 13px;
+            color: #666;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="container">
-
     <h1>Northstar Retail Support</h1>
-
     <p>Welcome! How can we help you today?</p>
 
-    <hr>
+    <!-- Track My Order Section -->
+    <div class="section">
+        <h2>📦 Track My Order</h2>
+        <div class="input-group">
+            <input type="text" id="orderInput" placeholder="e.g. NSL12345" value="NSL12345">
+            <button type="button" onclick="checkOrderStatus()">Check Order Status</button>
+        </div>
+        <div id="orderResult" class="result-box"></div>
+    </div>
 
-    <h2>📦 Track My Order</h2>
+    <!-- Returns & Refunds Section -->
+    <div class="section">
+        <h2>🔄 Returns & Refunds</h2>
+        <div class="input-group">
+            <select id="returnReason">
+                <option value="">Select a reason</option>
+                <option value="damaged">Item damaged or defective</option>
+                <option value="wrong_size">Wrong size / fit issue</option>
+                <option value="not_described">Item not as described</option>
+                <option value="changed_mind">Changed my mind</option>
+            </select>
+            <br>
+            <button type="button" onclick="submitReturnRequest()">Submit Return Request</button>
+        </div>
+        <div id="returnResult" class="result-box"></div>
+    </div>
 
-    <input
-        type="text"
-        id="orderNumber"
-        placeholder="Enter Order Number">
+    <footer>
+        © 2026 Northstar Retail Co. | Support Deflection MVP
+    </footer>
 
-    <br>
+    <script>
+        // Mock database for demo order statuses
+        const mockOrders = {
+            "NSL12345": "🚚 Status: Out for Delivery (Expected Today by 5:00 PM)",
+            "NSL99999": "📦 Status: Shipped (Tracking ID: TRK-884920)",
+            "NSL00000": "⏳ Status: Processing in Warehouse"
+        };
 
-    <button onclick="checkOrderStatus()">
-        Check Order Status
-    </button>
+        function checkOrderStatus() {
+            const inputVal = document.getElementById('orderInput').value.trim().toUpperCase();
+            const resultBox = document.getElementById('orderResult');
 
-    <div id="result" class="result"></div>
+            if (!inputVal) {
+                resultBox.className = "result-box status-error";
+                resultBox.innerHTML = "⚠️ Please enter a valid Order Number.";
+                resultBox.style.display = "block";
+                return;
+            }
 
-    <hr>
+            if (mockOrders[inputVal]) {
+                resultBox.className = "result-box status-success";
+                resultBox.innerHTML = mockOrders[inputVal];
+            } else {
+                resultBox.className = "result-box status-success";
+                resultBox.innerHTML = `✅ Order ${inputVal} Found — Status: Delivered on August 12, 2026.`;
+            }
+            resultBox.style.display = "block";
+        }
 
-    <h2>🔄 Returns & Refunds</h2>
+        function submitReturnRequest() {
+            const reason = document.getElementById('returnReason').value;
+            const resultBox = document.getElementById('returnResult');
 
-    <select id="reason">
+            if (!reason) {
+                resultBox.className = "result-box status-error";
+                resultBox.innerHTML = "⚠️ Please select a reason for your return.";
+                resultBox.style.display = "block";
+                return;
+            }
 
-        <option value="">
-            Select a reason
-        </option>
-
-        <option value="Wrong Item">
-            Wrong Item
-        </option>
-
-        <option value="Damaged Item">
-            Damaged Item
-        </option>
-
-        <option value="Wrong Size">
-            Wrong Size
-        </option>
-
-        <option value="Other">
-            Other
-        </option>
-
-    </select>
-
-    <br><br>
-
-    <button onclick="showReturnInfo()">
-        Submit Return Request
-    </button>
-
-    <div id="returnResult" class="result"></div>
-
-</div>
-
-<footer>
-
-    <p>© 2026 Northstar Retail Co. | Support Deflection MVP</p>
-
-</footer>
-
-<!-- Link JavaScript -->
-<script src="script.js"></script>
+            resultBox.className = "result-box status-success";
+            resultBox.innerHTML = "✅ Return request generated! Instructions and printable label sent to your registered email.";
+            resultBox.style.display = "block";
+        }
+    </script>
 
 </body>
 </html>
-
