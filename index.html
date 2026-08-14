@@ -1,10 +1,85 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Northstar Support MVP</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Northstar Retail Support MVP</title>
+
+    <!-- Link CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <h1>Welcome to Northstar Retail Support</h1>
-    <p>This is our Support Deflection MVP.</p>
+
+<div class="container">
+
+    <h1>Northstar Retail Support</h1>
+
+    <p>Welcome! How can we help you today?</p>
+
+    <hr>
+
+    <h2>📦 Track My Order</h2>
+
+    <input
+        type="text"
+        id="orderNumber"
+        placeholder="Enter Order Number">
+
+    <br>
+
+    <button onclick="checkOrderStatus()">
+        Check Order Status
+    </button>
+
+    <div id="result" class="result"></div>
+
+    <hr>
+
+    <h2>🔄 Returns & Refunds</h2>
+
+    <select id="reason">
+
+        <option value="">
+            Select a reason
+        </option>
+
+        <option value="Wrong Item">
+            Wrong Item
+        </option>
+
+        <option value="Damaged Item">
+            Damaged Item
+        </option>
+
+        <option value="Wrong Size">
+            Wrong Size
+        </option>
+
+        <option value="Other">
+            Other
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <button onclick="showReturnInfo()">
+        Submit Return Request
+    </button>
+
+    <div id="returnResult" class="result"></div>
+
+</div>
+
+<footer>
+
+    <p>© 2026 Northstar Retail Co. | Support Deflection MVP</p>
+
+</footer>
+
+<!-- Link JavaScript -->
+<script src="script.js"></script>
+
 </body>
 </html>
