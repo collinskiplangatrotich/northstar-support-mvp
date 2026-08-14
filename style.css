@@ -1,78 +1,179 @@
-/* General Page Styling */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f7fc;
+/* ==========================================================================
+   Northstar Support MVP - Production Stylesheet
+   ========================================================================== */
+
+/* Theme Variables */
+:root {
+    --primary-color: #0d6efd;
+    --primary-hover: #0b5ed7;
+    --bg-color: #f4f7fc;
+    --card-bg: #ffffff;
+    --text-dark: #212529;
+    --text-muted: #6c757d;
+    --border-color: #e2e8f0;
+    --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+    --radius: 10px;
+    --transition: all 0.2s ease-in-out;
+}
+
+/* Base Resets */
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-/* Main Container */
-.container {
-    width: 90%;
-    max-width: 600px;
-    margin: 50px auto;
-    background: #ffffff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    text-align: center;
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-dark);
+    line-height: 1.5;
+    padding: 40px 15px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Headings */
+/* Main Container Card */
+.container {
+    width: 100%;
+    max-width: 580px;
+    background: var(--card-bg);
+    padding: 35px 30px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color);
+}
+
+/* Header Section */
+header {
+    text-align: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
 h1 {
-    color: #0d6efd;
+    color: var(--primary-color);
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+}
+
+p {
+    color: var(--text-muted);
+    font-size: 15px;
+}
+
+/* Section Cards (Order Tracking & Returns) */
+.section {
+    background: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: left;
+    transition: var(--transition);
+}
+
+.section:hover {
+    border-color: #cbd5e1;
 }
 
 h2 {
-    color: #333;
+    color: var(--text-dark);
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
 }
 
-/* Paragraphs */
-p {
-    color: #555;
-    font-size: 16px;
+/* Inputs & Dropdowns */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-/* Buttons */
+input[type="text"],
+select {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 15px;
+    color: var(--text-dark);
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    outline: none;
+    transition: var(--transition);
+}
+
+input[type="text"]:focus,
+select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+}
+
+/* Action Buttons */
 button {
-    background-color: #0d6efd;
-    color: white;
+    width: 100%;
+    background-color: var(--primary-color);
+    color: #ffffff;
     border: none;
     padding: 12px 20px;
-    margin: 10px;
-    border-radius: 5px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 6px;
     cursor: pointer;
-    font-size: 16px;
+    transition: var(--transition);
+    margin-top: 5px;
 }
 
 button:hover {
-    background-color: #0b5ed7;
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
 }
 
-/* Input Fields */
-input {
-    width: 90%;
-    padding: 10px;
-    margin: 15px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+button:active {
+    transform: translateY(0);
 }
 
-/* Result Box */
+/* Dynamic Result Displays */
 .result {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #e9f7ef;
-    border-left: 5px solid #28a745;
-    border-radius: 5px;
-    color: #155724;
+    margin-top: 15px;
+    animation: fadeIn 0.25s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Footer */
 footer {
     margin-top: 30px;
     text-align: center;
-    color: #777;
-    font-size: 14px;
+    color: var(--text-muted);
+    font-size: 13px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 15px;
 }
 
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    .container {
+        padding: 20px 15px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+}
