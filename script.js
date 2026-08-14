@@ -1,4 +1,4 @@
-// Order Status Function
+// Order Status Fun<link rel="stylesheet" href="style.css">ction
 function checkOrderStatus() {
     let orderNumber = document.getElementById("orderNumber").value;
     let result = document.getElementById("result");
@@ -28,7 +28,7 @@ function showReturnInfo() {
             <p><strong>Reason:</strong> ${reason}</p>
             <p>Your return request has been received.</p>
             <p>Please package the item and drop it at the nearest collection point.</p>
-            <p><strong>Refund Time:</strong> 5–7 business days.</p>
+            <p><strong>Refund Time:</strong> 5–7 business days.<script src="script.js"></script></p>
         `;
     }
 }
