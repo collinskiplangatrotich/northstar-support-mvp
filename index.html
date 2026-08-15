@@ -4,7 +4,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Northstar Retail Support</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --primary-hover: #0b5ed7;
+            --bg-color: #f4f7fc;
+            --card-bg: #ffffff;
+            --text-dark: #212529;
+            --text-muted: #6c757d;
+            --border-color: #e2e8f0;
+            --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            --radius: 10px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.5;
+            padding: 40px 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 580px;
+            background: var(--card-bg);
+            padding: 35px 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h1 { color: var(--primary-color); font-size: 26px; margin-bottom: 6px; }
+        p { color: var(--text-muted); font-size: 15px; }
+
+        .section {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        h2 { font-size: 18px; margin-bottom: 12px; }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 12px;
+            font-size: 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        button:hover { background-color: var(--primary-hover); }
+
+        .result { margin-top: 15px; }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 13px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+        }
+    </style>
 </head>
 <body>
 
@@ -14,32 +110,31 @@
             <p>Welcome! How can we help you today?</p>
         </header>
 
-        <!-- Track My Order Section -->
+        <!-- Section 1: Track My Order -->
         <div class="section">
             <h2>📦 Track My Order</h2>
             <div class="input-group">
                 <input type="text" id="orderNumber" placeholder="Enter Order Number (e.g., NSL12345)">
-                <button type="button" onclick="checkOrderStatus()">Check Order Status</button>
+                <button type="button" id="btnTrackOrder">Check Order Status</button>
             </div>
-            <div id="result" class="result"></div>
+            <div id="orderResult" class="result"></div>
         </div>
 
-        <!-- Returns & Refunds Section -->
+        <!-- Section 2: Returns & Refunds -->
         <div class="section">
             <h2>🔄 Returns & Refunds</h2>
 
-            <!-- Primary Selector -->
             <div class="input-group">
                 <label for="requestType"><strong>Select Service:</strong></label>
-                <select id="requestType" onchange="toggleSubOptions()">
+                <select id="requestType">
                     <option value="">-- Choose Return or Refund --</option>
                     <option value="return">Option 1: Return an Item</option>
                     <option value="refund">Option 2: Request / Check Refund</option>
                 </select>
             </div>
 
-            <!-- Conditional Sub-Menu: Return Options -->
-            <div id="returnOptionsGroup" class="input-group" style="display: none; margin-top: 15px;">
+            <!-- Return Options Dropdown -->
+            <div id="returnOptionsGroup" class="input-group" style="display: none;">
                 <label for="returnReason"><strong>Select Reason for Return:</strong></label>
                 <select id="returnReason">
                     <option value="">-- Select Return Reason --</option>
@@ -49,8 +144,8 @@
                 </select>
             </div>
 
-            <!-- Conditional Sub-Menu: Refund Options -->
-            <div id="refundOptionsGroup" class="input-group" style="display: none; margin-top: 15px;">
+            <!-- Refund Options Dropdown -->
+            <div id="refundOptionsGroup" class="input-group" style="display: none;">
                 <label for="refundOption"><strong>Select Refund Type:</strong></label>
                 <select id="refundOption">
                     <option value="">-- Select Refund Option --</option>
@@ -60,7 +155,7 @@
                 </select>
             </div>
 
-            <button type="button" onclick="submitReturnOrRefund()" style="margin-top: 15px;">Submit Request</button>
+            <button type="button" id="btnSubmitReturnRefund">Submit Request</button>
             <div id="returnResult" class="result"></div>
         </div>
 
@@ -69,6 +164,136 @@
         </footer>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            
+            // Mock Data
+            const MOCK_ORDERS = {
+                "NSL12345": { status: "Out for Delivery 🚚", deliveryDate: "15 August 2026", carrier: "Northstar Express" },
+                "NSL67890": { status: "Processing in Warehouse ⏳", deliveryDate: "18 August 2026", carrier: "Pending Dispatch" },
+                "NSL11223": { status: "Delivered ✅", deliveryDate: "12 August 2026", carrier: "Standard Logistics" }
+            };
+
+            // 1. Order Tracking Handler
+            document.getElementById("btnTrackOrder").addEventListener("click", function() {
+                const orderInput = document.getElementById("orderNumber");
+                const resultBox = document.getElementById("orderResult");
+                const orderNum = orderInput.value.trim().toUpperCase();
+
+                if (!orderNum) {
+                    resultBox.innerHTML = `
+                        <div style="background-color: #ffebee; color: #c62828; padding: 12px; border-radius: 6px; border: 1px solid #ef9a9a;">
+                            ⚠️ Please enter a valid order number.
+                        </div>`;
+                    return;
+                }
+
+                const order = MOCK_ORDERS[orderNum] || {
+                    status: "In Transit 🚛",
+                    deliveryDate: "16 August 2026",
+                    carrier: "Standard Parcel Post"
+                };
+
+                resultBox.innerHTML = `
+                    <div style="background-color: #e8f5e9; color: #1b5e20; padding: 15px; border-radius: 6px; border: 1px solid #a5d6a7;">
+                        <h3 style="margin-top: 0; color: #2e7d32;">📦 Order Details</h3>
+                        <p style="margin: 4px 0;"><strong>Order Number:</strong> ${orderNum}</p>
+                        <p style="margin: 4px 0;"><strong>Status:</strong> ${order.status}</p>
+                        <p style="margin: 4px 0;"><strong>Estimated Delivery:</strong> ${order.deliveryDate}</p>
+                        <p style="margin: 4px 0;"><strong>Carrier:</strong> ${order.carrier}</p>
+                    </div>`;
+            });
+
+            // 2. Dropdown Toggle Handler
+            document.getElementById("requestType").addEventListener("change", function() {
+                const type = this.value;
+                const returnGroup = document.getElementById("returnOptionsGroup");
+                const refundGroup = document.getElementById("refundOptionsGroup");
+                const resultBox = document.getElementById("returnResult");
+
+                resultBox.innerHTML = "";
+
+                if (type === "return") {
+                    returnGroup.style.display = "flex";
+                    refundGroup.style.display = "none";
+                } else if (type === "refund") {
+                    returnGroup.style.display = "none";
+                    refundGroup.style.display = "flex";
+                } else {
+                    returnGroup.style.display = "none";
+                    refundGroup.style.display = "none";
+                }
+            });
+
+            // 3. Return / Refund Submission Handler
+            document.getElementById("btnSubmitReturnRefund").addEventListener("click", function() {
+                const requestType = document.getElementById("requestType").value;
+                const resultBox = document.getElementById("returnResult");
+
+                if (!requestType) {
+                    resultBox.innerHTML = `
+                        <div style="background-color: #ffebee; color: #c62828; padding: 12px; border-radius: 6px; border: 1px solid #ef9a9a;">
+                            ⚠️ Please select whether you wish to Return an Item or Request a Refund.
+                        </div>`;
+                    return;
+                }
+
+                if (requestType === "return") {
+                    const returnSelect = document.getElementById("returnReason");
+                    if (!returnSelect.value) {
+                        resultBox.innerHTML = `
+                            <div style="background-color: #ffebee; color: #c62828; padding: 12px; border-radius: 6px; border: 1px solid #ef9a9a;">
+                                ⚠️ Please select a reason for your return.
+                            </div>`;
+                        return;
+                    }
+
+                    const reasonText = returnSelect.options[returnSelect.selectedIndex].text;
+                    const returnId = "RET-" + Math.floor(100000 + Math.random() * 900000);
+
+                    resultBox.innerHTML = `
+                        <div style="background-color: #e8f5e9; color: #1b5e20; padding: 15px; border-radius: 6px; border: 1px solid #a5d6a7;">
+                            <h3 style="margin-top: 0; color: #2e7d32;">📦 Return Request Initiated</h3>
+                            <p style="margin: 4px 0;"><strong>Return Reference:</strong> ${returnId}</p>
+                            <p style="margin: 4px 0;"><strong>Selected Reason:</strong> ${reasonText}</p>
+                            <p style="margin: 4px 0;"><strong>Next Step:</strong> Drop the item at any partner collection station using the reference code above.</p>
+                        </div>`;
+                } else if (requestType === "refund") {
+                    const refundSelect = document.getElementById("refundOption");
+                    if (!refundSelect.value) {
+                        resultBox.innerHTML = `
+                            <div style="background-color: #ffebee; color: #c62828; padding: 12px; border-radius: 6px; border: 1px solid #ef9a9a;">
+                                ⚠️ Please select a specific refund option.
+                            </div>`;
+                        return;
+                    }
+
+                    let responseContent = "";
+                    if (refundSelect.value === "status") {
+                        responseContent = `
+                            <h3 style="margin-top: 0; color: #2e7d32;">💳 Existing Refund Status</h3>
+                            <p style="margin: 4px 0;"><strong>Status:</strong> Approved & Dispatched</p>
+                            <p style="margin: 4px 0;"><strong>Amount:</strong> $45.00</p>
+                            <p style="margin: 4px 0;"><strong>Estimated Arrival:</strong> 2–3 business days.</p>`;
+                    } else if (refundSelect.value === "store_credit") {
+                        responseContent = `
+                            <h3 style="margin-top: 0; color: #2e7d32;">🎟️ Store Credit Code Generated</h3>
+                            <p style="margin: 4px 0;"><strong>Voucher Code:</strong> NORTHSTAR-CREDIT-2026</p>
+                            <p style="margin: 4px 0;"><strong>Value:</strong> $45.00 (Ready to use instantly on checkout)</p>`;
+                    } else if (refundSelect.value === "original_payment") {
+                        responseContent = `
+                            <h3 style="margin-top: 0; color: #2e7d32;">💸 Original Payment Refund Submitted</h3>
+                            <p style="margin: 4px 0;"><strong>Status:</strong> Processing</p>
+                            <p style="margin: 4px 0;"><strong>Timeline:</strong> Funds will reflect in your account within 5–7 business days.</p>`;
+                    }
+
+                    resultBox.innerHTML = `
+                        <div style="background-color: #e8f5e9; color: #1b5e20; padding: 15px; border-radius: 6px; border: 1px solid #a5d6a7;">
+                            ${responseContent}
+                        </div>`;
+                }
+            });
+        });
+    </script>
 </body>
 </html>
