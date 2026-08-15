@@ -53,7 +53,7 @@
 | #10 | Build stock API | Backend | ⏳ To Do | - | - |
 | #11 | Build stock UI | Frontend | ⏳ To Do | - | - |
 | #12 | Integration | Team Lead | 🔄 In Progress | `a1b2c3d` | - |
-| #13 | Demo script | QA | ⏳ To Do | - | - |
+| #13 | Demo script | all | ⏳ To Do | - | - |
 
 **Completion Rate:** 8/13 tasks done (62%)
 
