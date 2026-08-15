@@ -79,28 +79,45 @@
     </div>
 
     <!-- Returns & Refunds Section -->
-    <div class="section">
-        <h2>🔄 Returns & Refunds</h2>
-        <div class="input-group">
-            <select id="returnReason">
-                <option value="">Select a reason</option>
-                <option value="damaged">Item damaged or defective</option>
-                <option value="wrong_size">Wrong size / fit issue</option>
-                <option value="not_described">Item not as described</option>
-                <option value="changed_mind">Changed my mind</option>
-            </select>
-            <br>
-            <button type="button" onclick="submitReturnRequest()">Submit Return Request</button>
-        </div>
-        <div id="returnResult" class="result-box"></div>
+<div class="section">
+    <h2>🔄 Returns & Refunds</h2>
+
+    <!-- Primary Selector -->
+    <div class="input-group">
+        <label for="requestType"><strong>Select Service:</strong></label>
+        <select id="requestType" onchange="toggleSubOptions()">
+            <option value="">-- Choose Return or Refund --</option>
+            <option value="return">Option 1: Return an Item</option>
+            <option value="refund">Option 2: Request / Check Refund</option>
+        </select>
     </div>
 
-    <footer>
-        © 2026 Northstar Retail Co. | Support Deflection MVP
-    </footer>
+    <!-- Conditional Sub-Menu: Return Options -->
+    <div id="returnOptionsGroup" class="input-group" style="display: none; margin-top: 15px;">
+        <label for="returnReason"><strong>Select Reason for Return:</strong></label>
+        <select id="returnReason">
+            <option value="">-- Select Return Reason --</option>
+            <option value="damaged">Item arrived damaged/defective</option>
+            <option value="wrong_size">Wrong size or fit issue</option>
+            <option value="changed_mind">Changed my mind</option>
+        </select>
+    </div>
 
-    <script>
-        // Mock database for demo order statuses
+    <!-- Conditional Sub-Menu: Refund Options -->
+    <div id="refundOptionsGroup" class="input-group" style="display: none; margin-top: 15px;">
+        <label for="refundOption"><strong>Select Refund Type:</strong></label>
+        <select id="refundOption">
+            <option value="">-- Select Refund Option --</option>
+            <option value="status">Check Status of Ongoing Refund</option>
+            <option value="store_credit">Instant Store Credit Voucher</option>
+            <option value="original_payment">Refund to Original Payment Method</option>
+        </select>
+    </div>
+
+    <button type="button" onclick="submitReturnOrRefund()" style="margin-top: 15px;">Submit Request</button>
+    <div id="returnResult" class="result"></div>
+</div>
+       // Mock database for demo order statuses
         const mockOrders = {
             "NSL12345": "🚚 Status: Out for Delivery (Expected Today by 5:00 PM)",
             "NSL99999": "📦 Status: Shipped (Tracking ID: TRK-884920)",
