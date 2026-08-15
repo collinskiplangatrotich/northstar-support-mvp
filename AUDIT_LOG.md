@@ -25,15 +25,15 @@
 | Date | Time | Author | Commit Hash | Message | Linked Task |
 |------|------|--------|-------------|---------|-------------|
 | Day 4 | 09:30 | lerato | `a1b2c3d` | `docs: updated board status - all tasks reviewed` | #12 |
-| Day 4 | 09:15 | Tech Lead | `e4f5g6h` | `feat: integrated order API with frontend - completes full workflow` | #7 |
-| Day 3 | 16:45 | Backend Dev | `i7j8k9l` | `feat: added GET /orders/:id endpoint - enables self-service tracking` | #6 |
-| Day 3 | 14:20 | Frontend Dev | `m0n1o2p` | `feat: built order lookup component - customer can check status` | #7 |
-| Day 3 | 11:00 | QA | `q3r4s5t` | `test: added unit tests for order API - ensures reliability` | #6 |
-| Day 2 | 16:00 | Backend Dev | `u6v7w8x` | `feat: created order data model - supports all order operations` | #4 |
-| Day 2 | 13:30 | Frontend Dev | `y9z0a1b` | `feat: initialized React frontend - app loads at localhost:3000` | #2 |
-| Day 2 | 11:00 | Tech Lead | `c2d3e4f` | `chore: set up project structure - organized frontend/backend` | #1 |
-| Day 1 | 16:00 | lerato | `g5h6i7j` | `docs: signed team charter - establishes norms and escalation path` | - |
-| Day 1 | 14:30 | All | `k8l9m0n` | `docs: created project board with 13 granular tasks` | - |
+| Day 4 | 09:15 | Team Lead | `e4f5g6h` | `feat: integrated order API with frontend - completes full workflow` | #7 |
+| Day 3 | 16:45 | team lead | `i7j8k9l` | `feat: added GET /orders/:id endpoint - enables self-service tracking` | #6 |
+| Day 3 | 14:20 | all | `m0n1o2p` | `feat: built order lookup component - customer can check status` | #7 |
+| Day 3 | 11:00 | team lead | `q3r4s5t` | `test: added unit tests for order API - ensures reliability` | #6 |
+| Day 2 | 16:00 | joseph | `u6v7w8x` | `feat: created order data model - supports all order operations` | #4 |
+| Day 2 | 13:30 | cindy | `y9z0a1b` | `feat: initialized React frontend - app loads at localhost:3000` | #2 |
+| Day 2 | 11:00 | cindy & joseph | `c2d3e4f` | `chore: set up project structure - organized frontend/backend` | #1 |
+| Day 1 | 16:00 | team lead | `g5h6i7j` | `docs: signed team charter - establishes norms and escalation path` | - |
+| Day 1 | 14:30 | team lead | `k8l9m0n` | `docs: created project board with 13 granular tasks` | - |
 
 ---
 
@@ -45,7 +45,7 @@
 | #2 | Initialize frontend | Frontend | ✅ Done | `y9z0a1b` | PR #2 |
 | #3 | Initialize backend | Backend | ✅ Done | `r5s6t7u` | PR #3 |
 | #4 | Create data model | Backend | ✅ Done | `u6v7w8x` | PR #4 |
-| #5 | Create mock data | QA | ✅ Done | `v8w9x0y` | PR #5 |
+| #5 | Create mock data | team lead | ✅ Done | `v8w9x0y` | PR #5 |
 | #6 | Build order API | Backend | ✅ Done | `i7j8k9l`, `q3r4s5t` | PR #6 |
 | #7 | Build order UI | Frontend | ✅ Done | `m0n1o2p`, `e4f5g6h` | PR #7 |
 | #8 | Build return API | Backend | 🔄 In Review | `z1a2b3c` | PR #8 |
